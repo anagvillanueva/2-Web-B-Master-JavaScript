@@ -48,3 +48,20 @@ console.log(valor1 <= valor2);
 console.log(10 != '10');
 // Distinto que estricto
 console.log(10 !== '10');
+
+console.log(valor1 + 2);
+
+// Operadores combinados 
+valor1 = valor1 + 3;
+valor1 += 4;
+
+valor2 = valor2 - 8;
+valor2 -= 8;
+
+
+console.log(valor1);
+
+// El modulo % devuelve el restante de una division 
+// a % b 
+
+console.log(8 % 2)
