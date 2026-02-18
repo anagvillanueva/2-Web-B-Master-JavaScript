@@ -3,34 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>Introduccion a JS</title>
+    <title>Lista de Super</title>
 </head>
 <body>
-        <header>
-            <h1 id="titulo">Hola Mundo</h1>
-            <ul>
-                <li>Home</li>
-                <li>Referencias</li>
-                <li>Blog</li>
-                <li>Contacto</li>
-            </ul>
-        </header>
+    <h1>Escribe tus productos del super:</h1>
 
-        <main>
-            <section>
-                <p id="texto">Hola soy un parrafo</p>
-            </section>
+    <div>
+        <input type="text" id="itemInput" placeholder="Papel de bano..">
+        <button id="addItemButton">Agregar producto</button>
+    </div>
 
-            <div id="caja" class="caja"></div>
-        </main>
+    <main>
+        <ul id="itemList"></ul>
+    </main>
 
-        <button id="btnTexto">Cambiar texto</button>
-        <button id="btnColor">Cambiar color</button>
-        <button id="btnOcultar">Ocultar/Mostrar</button>
-        <button id="btnClase">Cambiar de clase</button>
-
-    <!--Enlazando mi archivo HTML con mi archivo JS-->
     <script src="main.js"></script>
 </body>
 </html>

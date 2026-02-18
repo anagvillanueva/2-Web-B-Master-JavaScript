@@ -1,3 +1,5 @@
+//Buscamos los elementos en el DOM
+
 const form = document.getElementById("formComentario");
 const textarea = document.getElementById("comentario");
 const lista = document.getElementById("listaComentarios");
@@ -27,7 +29,7 @@ form.addEventListener("submit", (e) => {
 
     btnEliminar.addEventListener("click", () => {
         divComentario.remove();
-    });
+});
 
     // Armar comentario
     divComentario.appendChild(pTexto);

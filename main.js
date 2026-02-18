@@ -1,43 +1,33 @@
-//Seleccionados nuestros elementos del DOM mediante ID 
+//Paso 1) Seleccionar mis elementos que voy a ocupar
 
-const titulo = document.getElementById("titulo");
-console.log(titulo);
+let itemInput = document.getElementById("itemInput");
+let addItemButton = document.getElementById('addItemButton');
+let itemList = document.getElementById("itemList");
 
-const texto = document.getElementById("texto");
-console.log(texto);
+//Paso 2) Crear mi funcion 
+function addItemButtonClik(){
+    let itemText = itemInput.value;
+    
+    let newItem = document.createElement('li');
 
-const caja = document.getElementById("caja");
-console.log(caja)
+    //Crear un elemento span 
+    let textSpan = document.createElement('span');
+    textSpan.textContent = itemText;
+    newItem.appendChild(textSpan)
 
-const btnClase = document.getElementById("btnClase")
-const btnTexto = document.getElementById("btnTexto");
-const btnColor = document.getElementById("btnColor");
-const btnOcultar = document.getElementById("btnOcultar");
+    //Crear el boton eliminar 
+    let deleteButton = document.createElement('button');
+    deleteButton.textContent = 'Eliminar'
 
+    
+    deleteButton.addEventListener('click', function(){
+        newItem.remove();
+    })
 
-// El evento addEventListener esta escuchando ... que haga click 
+    newItem.appendChild(deleteButton)
+    itemList.appendChild(newItem)
+    itemInput.value = '';
+}
 
-// Cambiar texto 
-btnTexto.addEventListener("click", () =>{
-    titulo.textContent = 'Cambiaste el texto desde Javascript'
-});
-
-// Cambiar colores
-btnColor.addEventListener("click", () =>{
-    titulo.style.color = 'purple';
-    caja.style.backgroundColor = 'pink';
-});
-
-//Para ocultar mi caja 
-btnOcultar.addEventListener("click", () => {
-    if(caja.style.display === "none"){
-        caja.style.display = "block";
-    }else{
-        caja.style.display = 'none';
-    }
-});
-
-// Cambiar de clase CSS
-btnClase.addEventListener("click", () => {
-    caja.classList.toggle("activa"); // Cambia el estado visual 
-});
+// Agregamos el evento escuchador click y le asignamos nuestra funcion que creamos 
+addItemButton.addEventListener('click', addItemButtonClik);
