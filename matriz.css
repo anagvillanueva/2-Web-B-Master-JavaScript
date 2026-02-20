@@ -1,0 +1,205 @@
+/* ===== Reset básico ===== */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f5f6f8;
+    color: #111;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 28px auto;
+    padding: 0 16px;
+}
+
+h1 {
+    text-align: center;
+    letter-spacing: 1px;
+    margin: 0 0 18px;
+}
+
+/* ===== Panel superior ===== */
+.panel {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    padding: 16px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+    margin-bottom: 16px;
+}
+
+.label {
+    font-weight: 700;
+    display: inline-block;
+    margin-bottom: 6px;
+}
+
+.top-row {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.bottom-row {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-top: 12px;
+}
+
+.input {
+    flex: 1;
+    padding: 12px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    outline: none;
+}
+
+.input:focus {
+    border-color: #2563eb;
+}
+
+.select {
+    padding: 10px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    outline: none;
+    min-width: 220px;
+}
+
+/* Mensaje de validación */
+.msg {
+    margin: 10px 0 0;
+    min-height: 18px;
+    /* reserva espacio aunque no haya texto */
+    color: #b91c1c;
+    /* rojo suave */
+    font-size: 14px;
+}
+
+/* ===== Botones ===== */
+.btn {
+    border: 1px solid #d1d5db;
+    background: #fff;
+    border-radius: 10px;
+    padding: 12px 14px;
+    cursor: pointer;
+}
+
+.btn.primary {
+    background: #2563eb;
+    border-color: #2563eb;
+    color: #fff;
+}
+
+.btn.primary:hover {
+    filter: brightness(0.95);
+}
+
+/* ===== Matriz ===== */
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+@media (max-width: 720px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .select {
+        min-width: 0;
+        flex: 1;
+    }
+}
+
+/* ===== Cards ===== */
+.card {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    border-bottom: 1px solid #eef2f7;
+}
+
+.card-header h2 {
+    font-size: 18px;
+    margin: 0;
+    letter-spacing: 0.5px;
+}
+
+/* Bolitas de color */
+.dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: inline-block;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.red {
+    background: #ef4444;
+}
+
+.yellow {
+    background: #f59e0b;
+}
+
+.green {
+    background: #22c55e;
+}
+
+.blue {
+    background: #3b82f6;
+}
+
+/* ===== Lista de tareas ===== */
+.list {
+    list-style: none;
+    padding: 10px 12px 14px;
+    margin: 0;
+}
+
+/* Cada tarea es una fila */
+.item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 10px 10px;
+    border: 1px solid #eef2f7;
+    border-radius: 12px;
+    margin-top: 10px;
+}
+
+/* Texto de la tarea */
+.item span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Botón eliminar */
+.btn.delete {
+    padding: 8px 10px;
+    border-radius: 10px;
+    border: 1px solid #d1d5db;
+    background: #f3f4f6;
+}
+
+.btn.delete:hover {
+    filter: brightness(0.96);
+}
