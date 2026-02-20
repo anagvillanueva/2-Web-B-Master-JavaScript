@@ -1,22 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Super</title>
+    <title>Querido Diario</title>
 </head>
 <body>
-    <h1>Escribe tus productos del super:</h1>
+    <h1>Querido Diario</h1>
 
-    <div>
-        <input type="text" id="itemInput" placeholder="Papel de bano..">
-        <button id="addItemButton">Agregar producto</button>
-    </div>
+    <p id="fecha"></p> <!--Aqui se mostrara la fecha en que se guardo-->
 
-    <main>
-        <ul id="itemList"></ul>
-    </main>
+    <textarea  id="texto" placeholder="Escribe aqui tus pensamientos..." rows="6" cols="50"></textarea>
 
+    <br>
+
+    <button id="guardar">Guardar</button>
+    <button id="borrar">Eliminar</button>
+
+    <!--Conectando nuestro archivo JS-->
     <script src="main.js"></script>
 </body>
 </html>
