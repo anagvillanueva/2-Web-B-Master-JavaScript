@@ -8,94 +8,163 @@ Si queremos guardar objetos/arrays debemos convertir a JSON
 localStorage.setItem("usuario", JSON.stringify(objeto))
 
 API Web Storage de JavaScript
-
-
-clave --> valor 
-
-nombre --> Ana 
-idioma --> espanol
-
-GUARDAR DATOS
-localStorage.setItem("clave", "valor");
-
-OBTENER DATOS 
-localStorage.getItem("clave");
-Si no existe va devolver NULL
-
-ELIMINAR DATOS 
-localStorage.removeItem("clave");
-
-BORRAR TODO EL ALMACENAMIENTO 
-localStorage.clear();
-
-
-Cuando NO debenmos de usarlo:
-- Datos sensibles como contrasenas 
-- Informacion muy grande 
-- Seguridad critica
-
-localStorage
-sessionStorage 
-cookies
 */
 
-
 // Seleccionar nuestros elementos del DOM 
+const txt = document.getElementById('texto');
+const btnGuardar = document.getElementById('guardar');
+const btnCancelar = document.getElementById('cancelar');
+const pensamientosList = document.getElementById('pensamientos-list');
+const sinPensamientos = document.getElementById('sin-pensamientos');
 
-let txt = document.getElementById('texto');
-let fechaP = document.getElementById('fecha');
-let btnGuardar = document.getElementById('guardar');
-let btnBorrar = document.getElementById('borrar');
+// Declarar la clave donde se van a guardar en localStorage 
+const CLAVE_PENSAMIENTOS = 'diario_pensamientos';
 
-// Declarar las claves donde se van a guardar en localStorage 
+// Variable para controlar si estamos editando
+let editandoId = null;
 
-const CLAVE_TEXTO = 'diario_texto';
-const CLAVE_FECHA = 'diario_fecha'
-
-// Funcion para obtener la fecha del dia de hoy 
-
-function fechaSoloDia(){
-    let hoy = new Date();  // Creamos un objeto con la fecha actual 
-    return hoy.toLocaleDateString('es-MX') 
+// Función para obtener la fecha actual
+function fechaSoloDia() {
+    let hoy = new Date();
+    return hoy.toLocaleDateString('es-MX', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+    });
 }
 
-function cargar(){
-    let textoGuardado = localStorage.getItem(CLAVE_TEXTO)
-    let fechaGuardada = localStorage.getItem(CLAVE_FECHA)
-
-    if(textoGuardado){
-        txt.value = textoGuardado;
-    }
-
-    if(fechaGuardada){
-        fechaP.textContent = 'Guardado el:' + fechaGuardada;
-    }else {
-        fechaP.textContent = '';
-    }
+// Función para obtener todos los pensamientos del localStorage
+function obtenerPensamientos() {
+    const datos = localStorage.getItem(CLAVE_PENSAMIENTOS);
+    return datos ? JSON.parse(datos) : [];
+    // Operador ternario: Si datos existe, lo parseamos, si no, devolvemos un array vacío
 }
 
-// Para darle click en Guardar 
-btnGuardar.onclick = () => {
-    let texto = txt.value.trim(); // Para quitar espacios 
+// Función para guardar pensamientos en localStorage
+function guardarEnLocalStorage(pensamientos) {
+    localStorage.setItem(CLAVE_PENSAMIENTOS, JSON.stringify(pensamientos));
+}
 
-    if(!texto) return; 
+// Función para generar un ID único
+function generarId() {
+    return Date.now().toString();
+}
 
-    let hoy = fechaSoloDia(); // Funcion que creamos para obtener el dia
+// Función para renderizar las tarjetas
+function renderizarPensamientos() {
+    const pensamientos = obtenerPensamientos();
+    pensamientosList.innerHTML = '';
 
-    // Guardado como string 
-    localStorage.setItem(CLAVE_TEXTO, texto)
-    localStorage.setItem(CLAVE_FECHA, hoy)
+    if (pensamientos.length === 0) {
+        sinPensamientos.style.display = 'block';
+        return;
+    }
 
-    fechaP.textContent = 'Guardado el: ' + hoy;
-};
+    sinPensamientos.style.display = 'none';
 
-// Para darle click en Eliminar 
-btnBorrar.onclick = () => {
-    localStorage.removeItem(CLAVE_TEXTO)
-    localStorage.removeItem(CLAVE_FECHA)
+    // Mostrar los pensamientos en orden inverso (más recientes primero)
+    pensamientos.reverse().forEach(pensamiento => {
+        const card = document.createElement('div');
+        card.className = 'pensamiento-card';
+        card.innerHTML = `
+            <div class="pensamiento-fecha">${pensamiento.fecha}</div>
+            <div class="pensamiento-texto">${pensamiento.texto}</div>
+            <div class="pensamiento-acciones">
+                <button class="btn-editar" onclick="editarPensamiento('${pensamiento.id}')">Editar</button>
+                <button class="btn-eliminar" onclick="eliminarPensamiento('${pensamiento.id}')">Eliminar</button>
+            </div>
+        `;
+        pensamientosList.appendChild(card);
+    });
+}
 
+// Función para guardar un nuevo pensamiento
+function guardarPensamiento() {
+    const texto = txt.value.trim();
+
+    if (!texto) {
+        alert('Por favor escribe algo antes de guardar');
+        return;
+    }
+
+    const pensamientos = obtenerPensamientos();
+    const fecha = fechaSoloDia();
+
+    if (editandoId) {
+        // Editar pensamiento existente
+        const indice = pensamientos.findIndex(p => p.id === editandoId);
+        if (indice !== -1) {
+            pensamientos[indice].texto = texto;
+            pensamientos[indice].fecha = 'Editado: ' + fecha;
+        }
+        editandoId = null;
+        btnCancelar.style.display = 'none';
+        btnGuardar.textContent = 'Guardar Pensamiento';
+    } else {
+        // Crear nuevo pensamiento
+        const nuevoPensamiento = {
+            id: generarId(),
+            texto: texto,
+            fecha: fecha
+        };
+        pensamientos.push(nuevoPensamiento);
+    }
+
+    guardarEnLocalStorage(pensamientos);
     txt.value = '';
-    fechaP.textContent = '';
+    renderizarPensamientos();
+}
+
+// Función para editar un pensamiento
+window.editarPensamiento = function(id) {
+    const pensamientos = obtenerPensamientos();
+    const pensamiento = pensamientos.find(p => p.id === id);
+
+    if (pensamiento) {
+        txt.value = pensamiento.texto;
+        editandoId = id;
+        btnCancelar.style.display = 'inline-block';
+        btnGuardar.textContent = 'Guardar Cambios';
+        txt.focus();
+    }
 };
 
-cargar(); // Llamar a la funcion cargar al inicio para mostrar lo que ya estaba guardado
+// Función para cancelar edición
+function cancelarEdicion() {
+    txt.value = '';
+    editandoId = null;
+    btnCancelar.style.display = 'none';
+    btnGuardar.textContent = 'Guardar Pensamiento';
+}
+
+// Función para eliminar un pensamiento
+window.eliminarPensamiento = function(id) {
+    if (confirm('¿Estás seguro de que deseas eliminar este pensamiento?')) {
+        let pensamientos = obtenerPensamientos();
+        pensamientos = pensamientos.filter(p => p.id !== id);
+        guardarEnLocalStorage(pensamientos);
+        
+        // Si estábamos editando este pensamiento, cancelar la edición
+        if (editandoId === id) {
+            cancelarEdicion();
+        }
+        
+        renderizarPensamientos();
+    }
+};
+
+// Event listeners
+btnGuardar.addEventListener('click', guardarPensamiento);
+btnCancelar.addEventListener('click', cancelarEdicion);
+
+// Permitir guardar con Enter
+txt.addEventListener('keydown', (e) => {
+    if (e.ctrlKey && e.key === 'Enter') {
+        guardarPensamiento();
+    }
+});
+
+// Cargar los pensamientos al iniciar
+renderizarPensamientos();

@@ -1,0 +1,330 @@
+/* Estilos generales del Diario */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px;
+}
+
+/* Contenedor wrapper */
+.diario-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    max-width: 1200px;
+    width: 100%;
+    padding-top: 20px;
+}
+
+/* Contenedor del editor */
+.diario-editor {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    padding: 40px;
+    animation: slideIn 0.5s ease-out;
+}
+
+/* Contenedor de tarjetas */
+.diario-container {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    padding: 40px;
+    animation: slideIn 0.5s ease-out 0.1s backwards;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Encabezado */
+h1 {
+    color: #764ba2;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 2.5em;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    color: #764ba2;
+    margin-bottom: 20px;
+    font-size: 1.8em;
+    border-bottom: 3px solid #667eea;
+    padding-bottom: 10px;
+}
+
+/* Área de texto */
+#texto {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 16px;
+    resize: vertical;
+    min-height: 250px;
+    transition: all 0.3s ease;
+    color: #333;
+    background-color: #fafafa;
+    margin-bottom: 20px;
+}
+
+#texto:focus {
+    outline: none;
+    border-color: #667eea;
+    background-color: white;
+    box-shadow: 0 0 15px rgba(102, 126, 234, 0.2);
+}
+
+#texto::placeholder {
+    color: #999;
+}
+
+/* Contenedor de botones */
+.button-container {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* Botones */
+button {
+    padding: 12px 30px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+#guardar {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    flex: 1;
+    min-width: 150px;
+}
+
+#guardar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+}
+
+#guardar:active {
+    transform: translateY(0);
+}
+
+#cancelar {
+    background: linear-gradient(135deg, #999 0%, #666 100%);
+    color: white;
+    flex: 1;
+    min-width: 150px;
+}
+
+#cancelar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(150, 150, 150, 0.4);
+}
+
+/* Lista de pensamientos */
+.pensamientos-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-height: 600px;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.pensamientos-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.pensamientos-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.pensamientos-list::-webkit-scrollbar-thumb {
+    background: #667eea;
+    border-radius: 10px;
+}
+
+.pensamientos-list::-webkit-scrollbar-thumb:hover {
+    background: #764ba2;
+}
+
+/* Tarjetas de pensamientos */
+.pensamiento-card {
+    background: linear-gradient(135deg, #fafafa 0%, #f5f5f5 100%);
+    border-left: 5px solid #667eea;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    animation: cardSlideIn 0.3s ease-out;
+}
+
+@keyframes cardSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.pensamiento-card:hover {
+    transform: translateX(5px);
+    box-shadow: 0 5px 25px rgba(102, 126, 234, 0.2);
+}
+
+.pensamiento-fecha {
+    color: #667eea;
+    font-size: 0.9em;
+    font-weight: bold;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.pensamiento-fecha::before {
+    content: "📅";
+}
+
+.pensamiento-texto {
+    color: #333;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+}
+
+.pensamiento-acciones {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+.btn-editar,
+.btn-eliminar {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.btn-editar {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    color: white;
+}
+
+.btn-editar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 3px 12px rgba(79, 172, 254, 0.4);
+}
+
+.btn-eliminar {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: white;
+}
+
+.btn-eliminar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 3px 12px rgba(245, 87, 108, 0.4);
+}
+
+/* Mensaje de sin pensamientos */
+.sin-pensamientos {
+    text-align: center;
+    padding: 40px 20px;
+    color: #999;
+}
+
+.sin-pensamientos p {
+    font-size: 1.1em;
+    font-style: italic;
+}
+
+/* Responsivo para dispositivos móviles */
+@media (max-width: 1024px) {
+    .diario-wrapper {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+}
+
+@media (max-width: 600px) {
+    .diario-editor,
+    .diario-container {
+        padding: 25px;
+    }
+
+    h1 {
+        font-size: 2em;
+    }
+
+    h2 {
+        font-size: 1.4em;
+    }
+
+    #texto {
+        min-height: 200px;
+        font-size: 14px;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+
+    .button-container {
+        flex-direction: column;
+    }
+
+    button {
+        width: 100%;
+    }
+
+    .pensamiento-acciones {
+        flex-direction: column;
+    }
+
+    .btn-editar,
+    .btn-eliminar {
+        width: 100%;
+    }
+
+    .pensamientos-list {
+        max-height: none;
+    }
+}
